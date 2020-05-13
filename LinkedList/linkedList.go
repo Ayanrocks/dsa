@@ -30,19 +30,23 @@ func (l *LinkedList) Insert(value int) {
 }
 
 func (l *LinkedList) Delete(node int) {
-	currentNode := *head
-	parentNode := currentNode
 	if node == head.value {
 		head = head.next
 		return
 	}
+	currentNode := head
+	parentNode := currentNode
 	for currentNode.next != nil {
 		if currentNode.value == node {
 			parentNode.next = currentNode.next
 			break
 		}
 		parentNode = currentNode
-		currentNode = *currentNode.next
+		currentNode = currentNode.next
+	}
+	if node == tail.value {
+		tail = parentNode
+		tail.next = nil
 	}
 }
 
@@ -52,6 +56,7 @@ func (l *LinkedList) Print() {
 		fmt.Printf("%d -> ", currentNode.value)
 		currentNode = *currentNode.next
 	}
+	fmt.Printf("%d -> ", currentNode.value)
 	fmt.Println("")
 }
 
@@ -70,5 +75,6 @@ func main() {
 	ll.Delete(29)
 	ll.Print()
 	ll.Delete(10)
+	ll.Delete(89)
 	ll.Print()
 }
