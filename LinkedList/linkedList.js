@@ -22,6 +22,7 @@ class LinkedList {
           currentNode.next = newNode;
           break;
         }
+        pos++
         currentNode = currentNode.next;
       }
     } else {
