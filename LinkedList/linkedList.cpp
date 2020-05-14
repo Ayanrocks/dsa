@@ -19,6 +19,7 @@ void insert(int value, int index = -1)
     if (!head)
     {
         head = &newNode;
+        tail = &newNode;
     }
     else
     {
@@ -89,6 +90,7 @@ void print()
     while (currentNode->next != NULL)
     {
         cout << currentNode->value << " -> ";
+        currentNode = currentNode->next;
     }
 
     cout << currentNode->value << " -> " << endl;
