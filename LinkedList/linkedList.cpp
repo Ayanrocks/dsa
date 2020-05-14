@@ -13,9 +13,12 @@ LinkedList *tail = head;
 
 void insert(int value, int index = -1)
 {
-    LinkedList *newNode = (LinkedList *)malloc(sizeof(LinkedList));
+    // Dynamically allocated memory block;
+    // LinkedList *newNode = (LinkedList *)malloc(sizeof(LinkedList));
+    LinkedList *newNode = new LinkedList;
     newNode->value = value;
     newNode->next = NULL;
+    // if head is not there
     if (!head)
     {
         head = newNode;
@@ -23,8 +26,10 @@ void insert(int value, int index = -1)
     }
     else
     {
+        // inserting if index is specified
         if (index != -1)
         {
+            // inserting at begining
             if (index == 0)
             {
                 newNode->next = head;
@@ -36,18 +41,21 @@ void insert(int value, int index = -1)
             int pos = 0;
             while (currentNode->next != NULL)
             {
+                // if index and position match
                 if (index == pos)
                 {
+                    // point newnode to the current Node and shift parent node to point newNode
                     newNode->next = parentNode->next;
                     parentNode->next = newNode;
                 }
                 pos++;
             }
-        }
+        } // If index is not specified insert at the end
         else
         {
             tail->next = newNode;
         }
+        // Increment tail to the new node attached
         tail = tail->next;
     }
 }
@@ -59,6 +67,7 @@ void remove(int node)
         cout << "Linked List Empty" << endl;
         return;
     }
+    // deleteing the first node
     if (node == head->value)
     {
         head = head->next;
@@ -72,6 +81,7 @@ void remove(int node)
     {
         if (currentNode->value == node)
         {
+            // removing currentNode by pointing the parent to the next node
             parentNode->next = currentNode->next;
             delete currentNode;
             break;
