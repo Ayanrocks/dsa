@@ -13,13 +13,13 @@ LinkedList *tail = head;
 
 void insert(int value, int index = -1)
 {
-    LinkedList newNode;
-    newNode.value = value;
-    newNode.next = head;
+    LinkedList *newNode = (LinkedList *)malloc(sizeof(LinkedList));
+    newNode->value = value;
+    newNode->next = NULL;
     if (!head)
     {
-        head = &newNode;
-        tail = &newNode;
+        head = newNode;
+        tail = newNode;
     }
     else
     {
@@ -27,8 +27,8 @@ void insert(int value, int index = -1)
         {
             if (index == 0)
             {
-                newNode.next = head;
-                head = &newNode;
+                newNode->next = head;
+                head = newNode;
             }
 
             LinkedList *currentNode = head;
@@ -38,15 +38,15 @@ void insert(int value, int index = -1)
             {
                 if (index == pos)
                 {
-                    newNode.next = parentNode->next;
-                    parentNode->next = &newNode;
+                    newNode->next = parentNode->next;
+                    parentNode->next = newNode;
                 }
                 pos++;
             }
         }
         else
         {
-            tail->next = &newNode;
+            tail->next = newNode;
         }
         tail = tail->next;
     }
@@ -73,13 +73,17 @@ void remove(int node)
         if (currentNode->value == node)
         {
             parentNode->next = currentNode->next;
+            delete currentNode;
             break;
         }
+        parentNode = currentNode;
+        currentNode = currentNode->next;
     }
 
     if (currentNode->value == tail->value)
     {
         tail = parentNode;
+        delete tail->next;
         tail->next = NULL;
     }
 }
