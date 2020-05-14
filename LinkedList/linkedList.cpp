@@ -11,7 +11,7 @@ struct LinkedList
 LinkedList *head = NULL;
 LinkedList *tail = head;
 
-void insert(int value, int index = NULL)
+void insert(int value, int index = -1)
 {
     LinkedList newNode;
     newNode.value = value;
@@ -22,7 +22,7 @@ void insert(int value, int index = NULL)
     }
     else
     {
-        if (index)
+        if (index != -1)
         {
             if (index == 0)
             {
@@ -49,4 +49,70 @@ void insert(int value, int index = NULL)
         }
         tail = tail->next;
     }
+}
+
+void remove(int node)
+{
+    if (!head)
+    {
+        cout << "Linked List Empty" << endl;
+        return;
+    }
+    if (node == head->value)
+    {
+        head = head->next;
+        return;
+    }
+
+    LinkedList *currentNode = head;
+    LinkedList *parentNode = currentNode;
+
+    while (currentNode->next != NULL)
+    {
+        if (currentNode->value == node)
+        {
+            parentNode->next = currentNode->next;
+            break;
+        }
+    }
+
+    if (currentNode->value == tail->value)
+    {
+        tail = parentNode;
+        tail->next = NULL;
+    }
+}
+
+void print()
+{
+    LinkedList *currentNode = head;
+    while (currentNode->next != NULL)
+    {
+        cout << currentNode->value << " -> ";
+    }
+
+    cout << currentNode->value << " -> " << endl;
+}
+
+int main()
+{
+    LinkedList ll;
+    ll.value = 10;
+    insert(25);
+    insert(34);
+    insert(12);
+    insert(3);
+    insert(87);
+    insert(43);
+    insert(29);
+    insert(56);
+    print();
+    insert(89);
+    remove(29);
+    print();
+    remove(10);
+    remove(89);
+    print();
+
+    return 0;
 }
