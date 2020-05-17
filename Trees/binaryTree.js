@@ -40,24 +40,42 @@ class BinaryTree {
         queue.push(currentNode.right);
       }
     }
-    console.log(string);
+    console.log("BFS TRAVERSAL\n",string);
   }
 
   // DFS
   depthFirstSearch(type) {
-    if (type === "INORDER") return this.preOrderTraversal(this);
-    if (type === "PREORDER") return this.preOrderTraversal(this);
-    if (type === "POSTORDER") return this.postOrderTraversal(this);
+    if (type === "INORDER") {
+      console.log("\nInorder Traversal\n");
+      console.log(...this.inOrderTraversal(this, []));
+    }
+    if (type === "PREORDER") {
+      console.log("\nPreOrder Traversal\n");
+      console.log(...this.preOrderTraversal(this, []));
+    }
+    if (type === "POSTORDER") {
+      console.log("\nPostOrder Traversal\n");
+      console.log(...this.postOrderTraversal(this, []));
+    }
   }
 
-  inOrderTraversal() {
-    
+  inOrderTraversal(node, list) {
+    if (node.left) this.inOrderTraversal(node.left, list);
+    list.push(node.value + " ->  ");
+    if (node.right) this.inOrderTraversal(node.right, list);
+    return list;
   }
-  preOrderTraversal() {
-
+  preOrderTraversal(node, list) {
+    list.push(node.value + " ->  ");
+    if (node.left) this.preOrderTraversal(node.left, list);
+    if (node.right) this.preOrderTraversal(node.right, list);
+    return list;
   }
-  postOrderTraversal() {
-
+  postOrderTraversal(node, list) {
+    if (node.left) this.postOrderTraversal(node.left, list);
+    if (node.right) this.postOrderTraversal(node.right, list);
+    list.push(node.value + " ->  ");
+    return list;
   }
 }
 
@@ -84,6 +102,9 @@ leftTree.insertRight(10);
 
 rightTree.insertRight(18);
 tree.breadthFirstSearch();
+tree.depthFirstSearch("INORDER");
+tree.depthFirstSearch("PREORDER");
+tree.depthFirstSearch("POSTORDER");
 
 console.log(tree.value);
 console.log(tree.left);
